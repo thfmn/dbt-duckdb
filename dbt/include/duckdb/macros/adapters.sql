@@ -207,7 +207,11 @@ def materialize(df, con):
   {% endif %}
 
   {% for k in options %}
-    {% set _ = options.update({k: render(options[k])}) %}
+    {% if options[k] is string %}
+      {% set _ = options.update({k: render(options[k])}) %}
+    {% else %}
+      {% set _ = options.update({k: render(options[k])}) %}
+    {% endif %}
   {% endfor %}
 
   {# legacy top-level write options #}
